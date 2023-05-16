@@ -218,7 +218,7 @@ function getRollupOutputOptions(
     freeze: !isProduction,
     interop: getRollupInteropValue,
     name: globalName,
-    sourcemap: false,
+    sourcemap: true,
     esModule: false,
     exports: 'auto',
   };
@@ -396,12 +396,12 @@ function getPlugins(
         bundle
       )
     ),
-    // Remove 'use strict' from individual source files.
-    {
-      transform(source) {
-        return source.replace(/['"]use strict["']/g, '');
-      },
-    },
+    // // Remove 'use strict' from individual source files.
+    // {
+    //   transform(source) {
+    //     return source.replace(/['"]use strict["']/g, '');
+    //   },
+    // },
     // Turn __DEV__ and process.env checks into constants.
     replace({
       preventAssignment: true,
@@ -419,74 +419,74 @@ function getPlugins(
     isUMDBundle && entry === 'react-art' && commonjs(),
     // Apply dead code elimination and/or minification.
     // closure doesn't yet support leaving ESM imports intact
-    isProduction &&
-      bundleType !== ESM_PROD &&
-      closure({
-        compilation_level: 'SIMPLE',
-        language_in: 'ECMASCRIPT_2020',
-        language_out:
-          bundleType === NODE_ES2015
-            ? 'ECMASCRIPT_2020'
-            : bundleType === BROWSER_SCRIPT
-            ? 'ECMASCRIPT5'
-            : 'ECMASCRIPT5_STRICT',
-        emit_use_strict:
-          bundleType !== BROWSER_SCRIPT &&
-          bundleType !== ESM_PROD &&
-          bundleType !== ESM_DEV,
-        env: 'CUSTOM',
-        warning_level: 'QUIET',
-        apply_input_source_maps: false,
-        use_types_for_optimization: false,
-        process_common_js_modules: false,
-        rewrite_polyfills: false,
-        inject_libraries: false,
-        allow_dynamic_import: true,
+    // isProduction &&
+    //   bundleType !== ESM_PROD &&
+    //   closure({
+    //     compilation_level: 'SIMPLE',
+    //     language_in: 'ECMASCRIPT_2020',
+    //     language_out:
+    //       bundleType === NODE_ES2015
+    //         ? 'ECMASCRIPT_2020'
+    //         : bundleType === BROWSER_SCRIPT
+    //         ? 'ECMASCRIPT5'
+    //         : 'ECMASCRIPT5_STRICT',
+    //     emit_use_strict:
+    //       bundleType !== BROWSER_SCRIPT &&
+    //       bundleType !== ESM_PROD &&
+    //       bundleType !== ESM_DEV,
+    //     env: 'CUSTOM',
+    //     warning_level: 'QUIET',
+    //     apply_input_source_maps: false,
+    //     use_types_for_optimization: false,
+    //     process_common_js_modules: false,
+    //     rewrite_polyfills: false,
+    //     inject_libraries: false,
+    //     allow_dynamic_import: true,
 
-        // Don't let it create global variables in the browser.
-        // https://github.com/facebook/react/issues/10909
-        assume_function_wrapper: !isUMDBundle,
-        renaming: !shouldStayReadable,
-      }),
+    //     // Don't let it create global variables in the browser.
+    //     // https://github.com/facebook/react/issues/10909
+    //     assume_function_wrapper: !isUMDBundle,
+    //     renaming: !shouldStayReadable,
+    //   }),
     // Add the whitespace back if necessary.
-    shouldStayReadable &&
-      prettier({
-        parser: 'flow',
-        singleQuote: false,
-        trailingComma: 'none',
-        bracketSpacing: true,
-      }),
+    // shouldStayReadable &&
+    //   prettier({
+    //     parser: 'flow',
+    //     singleQuote: false,
+    //     trailingComma: 'none',
+    //     bracketSpacing: true,
+    //   }),
     // License and haste headers, top-level `if` blocks.
-    {
-      renderChunk(source) {
-        return Wrappers.wrapBundle(
-          source,
-          bundleType,
-          globalName,
-          filename,
-          moduleType,
-          bundle.wrapWithModuleBoundaries
-        );
-      },
-    },
+    // {
+    //   renderChunk(source) {
+    //     return Wrappers.wrapBundle(
+    //       source,
+    //       bundleType,
+    //       globalName,
+    //       filename,
+    //       moduleType,
+    //       bundle.wrapWithModuleBoundaries
+    //     );
+    //   },
+    // },
     // Record bundle size.
-    sizes({
-      getSize: (size, gzip) => {
-        const currentSizes = Stats.currentBuildResults.bundleSizes;
-        const recordIndex = currentSizes.findIndex(
-          record =>
-            record.filename === filename && record.bundleType === bundleType
-        );
-        const index = recordIndex !== -1 ? recordIndex : currentSizes.length;
-        currentSizes[index] = {
-          filename,
-          bundleType,
-          packageName,
-          size,
-          gzip,
-        };
-      },
-    }),
+    // sizes({
+    //   getSize: (size, gzip) => {
+    //     const currentSizes = Stats.currentBuildResults.bundleSizes;
+    //     const recordIndex = currentSizes.findIndex(
+    //       record =>
+    //         record.filename === filename && record.bundleType === bundleType
+    //     );
+    //     const index = recordIndex !== -1 ? recordIndex : currentSizes.length;
+    //     currentSizes[index] = {
+    //       filename,
+    //       bundleType,
+    //       packageName,
+    //       size,
+    //       gzip,
+    //     };
+    //   },
+    // }),
   ].filter(Boolean);
 }
 
