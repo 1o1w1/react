@@ -5,7 +5,7 @@ export const Counter = () => {
 
   const add = useCallback(function add() {
     setCount(c => c + 1);
-  }, []);
+  }, [setCount]);
 
   return <button key={'Counter_div'} onClick={add}>{count}</button>;
 };
