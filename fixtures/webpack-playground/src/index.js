@@ -4,8 +4,8 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode key={'StrictMode'}>
-    <App key={'App'} />
-  </React.StrictMode>
+  <App key={'App'} />
+  // <React.StrictMode key={'StrictMode'}>
+  //   <App key={'App'} />
+  // </React.StrictMode>
 );
-

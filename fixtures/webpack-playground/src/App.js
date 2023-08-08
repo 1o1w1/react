@@ -1,7 +1,7 @@
 import { Counter } from "./Counter";
-
+import FiberDemo from "./FiberDemo";
 function App() {
-  return <Counter key={'Counter'} />
+  return <FiberDemo key={'Entry'} />
 }
 
 export default App;
