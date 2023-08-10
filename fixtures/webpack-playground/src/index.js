@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { Counter } from "./Counter";
+import FiberDemoFc from "./FiberDemo/FiberDemoFc";
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <App key={'App'} />
+  <FiberDemoFc key={'FiberDemoFc'} />
   // <React.StrictMode key={'StrictMode'}>
   //   <App key={'App'} />
   // </React.StrictMode>
